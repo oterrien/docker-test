@@ -16,7 +16,7 @@ public class ConsumerService {
 
         log.warn("Starting ConsumerService");
 
-        Jedis conn = new Jedis("redis");
+        Jedis conn = new Jedis("myredis");
 
         while (true) {
             try {

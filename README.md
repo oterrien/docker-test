@@ -7,19 +7,26 @@ Installer version 3 de dockercompose
 Il n'est peut être pas dans /usr/local/bin/docker-compose mais plutôt /usr/bin/docker-compose
 
 Pour démarrer les services:
-# se loguer à dockerhub sous linux 
+
+1. se loguer à dockerhub sous linux
+
 * docker login
 * credentials dockerhub
-# pousser l'image de consumer dans dockerhub
+
+2. pousser l'image de consumer dans dockerhub
+
 * copier consumer.jar et Dockerfile dans le répertoire "/home/oterrien/consumer" sur linux
-** cp -rf /media/sf_Ubuntu_Shared/pubsub/* /home/oterrien/pubsub-test
+    * cp -rf /media/sf_Ubuntu_Shared/pubsub/* /home/oterrien/pubsub-test
 * docker build -t consumer /home/oterrien/consumer
 * docker tag consumer oterrien/consumer:1.0  
 * docker push oterrien/consumer:1.0
-# pousser l'image de publisher dans dockerhub
+
+3. pousser l'image de publisher dans dockerhub
+
 * copier publisher.jar et Dockerfile dans le répertoire "/home/oterrien/consumer" sur linux
 * docker build -t publisher /home/oterrien/publisher
 * docker tag consumer oterrien/publisher:1.0  
 * docker push oterrien/publisher:1.0
-# lancer les services avec docker-compose
+
+4. lancer les services avec docker-compose
 * docker-compose up -d

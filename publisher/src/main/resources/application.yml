@@ -1,0 +1,6 @@
+logging:
+  level:
+    org.springframework.web: WARN
+    com.ote.test: INFO
+
+environment: ${ENV}

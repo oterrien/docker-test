@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+
+  redis:
+    image: "redis:alpine"
+    ports: ["6379"]
+    networks:
+      - back-tier
+
+  publisher:
+    image: "oterrien/publisher:1.0"
+    ports:
+      - "5000:8080"
+    networks:
+      - back-tier
+
+  consumer:
+    image: "oterrien/consumer:1.0"
+    networks:
+      - back-tier
+
+networks:
+  back-tier:

@@ -81,3 +81,15 @@ docker kill $(docker ps -q)
 docker rm $(docker ps -a -q)
 docker rmi -f $(docker images -q)
 ```
+
+## scalability
+
+Le consumer se prête à la scalabilité. On peut avoir plusieurs consumer concurrent sur une même queue RabbitMQ. 
+Seul le première consumer qui prend le message le traitera.
+
+Les commandes suivantes lanceront les services puis lancera 2 consumers supplémentaires (attention ce nombre d'instance est stockée). 
+
+```
+docker-compose up -d --build
+docker-compose scale consumer=3
+```

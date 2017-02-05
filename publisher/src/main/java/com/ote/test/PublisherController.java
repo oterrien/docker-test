@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.UUID;
 
+@Profile("rabbitmq")
 @RestController
 @Slf4j
 public class PublisherController {
@@ -23,7 +25,7 @@ public class PublisherController {
     @Value("${environment}")
     private String environment;
 
-    @Autowired
+    @Value("${rabbitmq.queue.name}")
     private String requestQueueName;
 
     @Autowired
@@ -49,6 +51,7 @@ public class PublisherController {
                     correlationId(correlationId).
                     build();
 
+            channel.queueDeclare(requestQueueName, true, false, false, null);
             channel.basicPublish(StringUtils.EMPTY, requestQueueName, props, message.getBytes("UTF-8"));
 
             log.debug(String.format("####-'%s' sent with correlationId [%s]", message, correlationId));

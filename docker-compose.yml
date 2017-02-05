@@ -2,48 +2,35 @@ version: "3"
 
 services:
 
-  rabbitmq:
-    image: "rabbitmq:alpine"
-    ports: ["6379"]
-    networks:
-      back-end:
-        aliases:
-          - rabbitmq.ote.com
+#  rabbitmq:
+#    image: "rabbitmq:alpine"
+#    ports:
+#      - "5672:5672"
+#    environment:
+#      AMPQ_ADDRESS: "amqp://rabbitmq:5672"
 
-  rabbitmq-management:
+  rabbitmq:
     image: "rabbitmq:management-alpine"
     ports:
       - "15672:15672"
-    depends_on:
-        - rabbitmq
-    networks:
-      - back-end
+      - "5672:5672"
+    environment:
+      AMPQ_ADDRESS: "amqp://rabbitmq:5672"
 
   publisher:
     image: "oterrien/publisher:3.0"
     ports:
       - "5000:8080"
-    networks:
-      - back-end
-    depends_on:
+    links:
       - rabbitmq
-      - rabbitmq-management
     environment:
-      ENV: development
-      RABBITMQ_HOST: rabbitmq.ote.com
-      RABBITMQ_PORT: 6379
+      ENV: "development"
+      AMPQ_ADDRESS: "amqp://rabbitmq:5672"
 
   consumer:
     image: "oterrien/consumer:3.0"
-    networks:
-      - back-end
-    depends_on:
+    links:
       - rabbitmq
-      - rabbitmq-management
     environment:
-      ENV: development
-      RABBITMQ_HOST: rabbitmq.ote.com
-      RABBITMQ_PORT: 6379
-
-networks:
-  back-end:
+      ENV: "development"
+      AMPQ_ADDRESS: "amqp://rabbitmq:5672"

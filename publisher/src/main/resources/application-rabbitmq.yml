@@ -1,6 +1,5 @@
 
 rabbitmq:
-  host: ${RABBITMQ_HOST}
-  port: ${RABBITMQ_PORT}
+  uri: ${AMPQ_ADDRESS}
   queue:
     name: testing-queue

@@ -16,17 +16,26 @@ Sur VirtualBox
 * /media/sf_Ubuntu_Shared/docker-test/
 
 Copier tous les fichiers :
-* cp -rf /media/sf_Ubuntu_Shared/docker-test/* /home/oterrien/docker-test
+```
+cp -rf /media/sf_Ubuntu_Shared/docker-test/* /home/oterrien/docker-test
+```
 
 ## se loguer à dockerhub sous linux
 
-* docker login
-* credentials dockerhub
+```
+docker login
+```
 
 ## pousser l'image de consumer dans dockerhub
 
-* copier consumer.jar et Dockerfile dans le répertoire "/home/oterrien/docker-test/consumer" sur linux
-    * cp -rf /media/sf_Ubuntu_Shared/docker-test/consumer/* /home/oterrien/docker-test/consumer
+copier consumer.jar et Dockerfile dans le répertoire "/home/oterrien/docker-test/consumer" sur linux
+
+```
+cp -rf /media/sf_Ubuntu_Shared/docker-test/consumer/* /home/oterrien/docker-test/consumer
+```
+
+puis exécuter les commandes suivantes:
+
 ```
  docker build -t consumer /home/oterrien/docker-test/consumer
  docker tag consumer oterrien/consumer:2.0  
@@ -35,8 +44,14 @@ Copier tous les fichiers :
 
 ## pousser l'image de publisher dans dockerhub
 
-* copier publisher.jar et Dockerfile dans le répertoire "/home/oterrien/docker-test/publisher" sur linux
-    * cp -rf /media/sf_Ubuntu_Shared/docker-test/publisher/* /home/oterrien/docker-test/publisher
+copier publisher.jar et Dockerfile dans le répertoire "/home/oterrien/docker-test/publisher" sur linux
+
+```
+cp -rf /media/sf_Ubuntu_Shared/docker-test/publisher/* /home/oterrien/docker-test/publisher
+```
+
+puis exécuter les commandes suivantes:
+
 ```
  docker build -t publisher /home/oterrien/docker-test/publisher
  docker tag publisher oterrien/publisher:2.0  
@@ -45,17 +60,24 @@ Copier tous les fichiers :
 
 ## lancer les services avec docker-compose
 
-* copier docker-compose.yml sur linux
-    * cp -rf /media/sf_Ubuntu_Shared/docker-test/docker-compose.yml /home/oterrien/docker-test
-* docker-compose up -d
+copier docker-compose.yml sur linux
+
+```
+cp -rf /media/sf_Ubuntu_Shared/docker-test/docker-compose.yml /home/oterrien/docker-test
+```
+
+puis exécuter les commandes suivantes:
+
+```
+docker-compose up -d --build
+```
 
 ## plusieurs commandes
 
-STOP ALL CONTAINERS  
- docker kill $(docker ps -q)
- 
-DELETE ALL STOPPED CONTAINERS  
- docker rm $(docker ps -a -q)
- 
-DELETE ALL IMAGES
- docker rmi -f $(docker images -q)
+Pour arrêter tous les services, supprimer tous les containers puis toutes les images:
+
+```
+docker kill $(docker ps -q)
+docker rm $(docker ps -a -q)
+docker rmi -f $(docker images -q)
+```

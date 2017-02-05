@@ -1,41 +1,45 @@
 package com.ote.test;
 
+import com.rabbitmq.client.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 
 @Service
 @Slf4j
 public class ConsumerService {
 
+    @Value("${environment}")
+    private String environment;
+
+    @Autowired
+    private String requestQueueName;
+
+    @Autowired
+    private Channel channel;
+
     @PostConstruct
-    public void init() {
+    public void init() throws Exception {
 
-        log.warn("Starting ConsumerService");
-
-        Jedis conn = new Jedis("redis.ote.com", 6379);
-
-        while (true) {
-            try {
-                String result = conn.rpop("correlId");
-                if (result != null) {
-                    log.warn(result);
-                }
-            } catch (JedisConnectionException e) {
-                log.error("Waiting for redis", e);
-            }
-            sleep(1000);
-        }
+        log.info("####-RuleCalculatorService started");
+        channel.basicConsume(requestQueueName, false, createConsumer());
     }
 
-    static void sleep(long duration) {
-        try {
-            Thread.sleep(duration);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    private Consumer createConsumer() {
+
+        return new DefaultConsumer(channel) {
+
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope,
+                                       AMQP.BasicProperties properties, byte[] body) throws IOException {
+
+                String request = new String(body, "UTF-8");
+                log.debug(String.format("####-'%s' received", request));
+            }
+        };
     }
 }

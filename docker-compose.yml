@@ -2,31 +2,48 @@ version: "3"
 
 services:
 
-  redis:
-    image: "redis:alpine"
+  rabbitmq:
+    image: "rabbitmq:alpine"
     ports: ["6379"]
     networks:
-      back:
+      back-end:
         aliases:
-          - redis.ote.com
+          - rabbitmq.ote.com
+
+  rabbitmq-management:
+    image: "rabbitmq:management-alpine"
+    ports:
+      - "15672:15672"
+    depends_on:
+        - rabbitmq
+    networks:
+      - back-end
 
   publisher:
-    image: "oterrien/publisher:2.0"
+    image: "oterrien/publisher:3.0"
     ports:
       - "5000:8080"
     networks:
-      - back
+      - back-end
     depends_on:
-      - redis
+      - rabbitmq
+      - rabbitmq-management
     environment:
       ENV: development
+      RABBITMQ_HOST: rabbitmq.ote.com
+      RABBITMQ_PORT: 6379
 
   consumer:
-    image: "oterrien/consumer:2.0"
+    image: "oterrien/consumer:3.0"
     networks:
-      - back
+      - back-end
     depends_on:
-      - redis
+      - rabbitmq
+      - rabbitmq-management
+    environment:
+      ENV: development
+      RABBITMQ_HOST: rabbitmq.ote.com
+      RABBITMQ_PORT: 6379
 
 networks:
-  back:
+  back-end:

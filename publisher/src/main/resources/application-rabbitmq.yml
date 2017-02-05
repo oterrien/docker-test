@@ -1,0 +1,6 @@
+
+rabbitmq:
+  host: ${RABBITMQ_HOST}
+  port: ${RABBITMQ_PORT}
+  queue:
+    name: testing-queue

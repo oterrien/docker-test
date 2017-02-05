@@ -3,3 +3,8 @@ logging:
     org.springframework.web: WARN
     com.ote.test: INFO
 
+spring:
+  application.name: consumer
+  profiles.active: rabbitmq
+
+environment: ${ENV:test}

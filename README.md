@@ -38,8 +38,8 @@ puis exécuter les commandes suivantes:
 
 ```
  docker build -t consumer /home/oterrien/docker-test/consumer
- docker tag consumer oterrien/consumer:2.0  
- docker push oterrien/consumer:2.0
+ docker tag consumer oterrien/consumer:3.0  
+ docker push oterrien/consumer:3.0
 ```
 
 ## pousser l'image de publisher dans dockerhub
@@ -54,8 +54,8 @@ puis exécuter les commandes suivantes:
 
 ```
  docker build -t publisher /home/oterrien/docker-test/publisher
- docker tag publisher oterrien/publisher:2.0  
- docker push oterrien/publisher:2.0
+ docker tag publisher oterrien/publisher:3.0  
+ docker push oterrien/publisher:3.0
 ```
 
 ## lancer les services avec docker-compose

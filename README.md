@@ -27,17 +27,21 @@ Copier tous les fichiers :
 
 * copier consumer.jar et Dockerfile dans le répertoire "/home/oterrien/docker-test/consumer" sur linux
     * cp -rf /media/sf_Ubuntu_Shared/docker-test/consumer/* /home/oterrien/docker-test/consumer
-* docker build -t consumer /home/oterrien/docker-test/consumer
-* docker tag consumer oterrien/consumer:2.0  
-* docker push oterrien/consumer:2.0
+```
+ docker build -t consumer /home/oterrien/docker-test/consumer
+ docker tag consumer oterrien/consumer:2.0  
+ docker push oterrien/consumer:2.0
+```
 
 ## pousser l'image de publisher dans dockerhub
 
 * copier publisher.jar et Dockerfile dans le répertoire "/home/oterrien/docker-test/publisher" sur linux
     * cp -rf /media/sf_Ubuntu_Shared/docker-test/publisher/* /home/oterrien/docker-test/publisher
-* docker build -t publisher /home/oterrien/docker-test/publisher
-* docker tag publisher oterrien/publisher:2.0  
-* docker push oterrien/publisher:2.0
+```
+ docker build -t publisher /home/oterrien/docker-test/publisher
+ docker tag publisher oterrien/publisher:2.0  
+ docker push oterrien/publisher:2.0
+```
 
 ## lancer les services avec docker-compose
 

@@ -6,7 +6,9 @@ services:
     image: "redis:alpine"
     ports: ["6379"]
     networks:
-      - back
+      back:
+        aliases:
+          - redis.ote.com
 
   publisher:
     image: "oterrien/publisher:2.0"

@@ -29,7 +29,7 @@ public class PublisherController {
     @RequestMapping(method = RequestMethod.POST, value = "/push/test")
     public ResponseEntity push() {
 
-        Jedis conn = new Jedis("redis");
+        Jedis conn = new Jedis("redis.ote.com", 6379);
 
         final String correlationId = UUID.randomUUID().toString();
 
